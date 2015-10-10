@@ -9,7 +9,7 @@
         hand_held_aanc_mic_strategy;
         hand_held_dual_mic_strategy;
         status = "ok";
-        aud_param_ver = "G750_C00_audio_B04";
+        aud_param_ver = "G750_C00_audio_C07";
         product-btsco-nrec-adapt;
         loud_speaker_error_mic_strategy;
     };
