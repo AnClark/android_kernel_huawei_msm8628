@@ -25,12 +25,13 @@
 
 				/* CY_CORE_FLAG_WAKE_ON_GESTURE */
 				cy,flags = <0>;
+				cy,easy_wakeup_supported_gestures = <31>; /*supported gestures ored bits*/
 
 				/* GLOVE function */
 				cy,use_configure_sensitivity = <1>;
 				
 				/* CY_CORE_EWG_TAP_TAP | CY_CORE_EWG_TWO_FINGER_SLIDE */
-				cy,easy_wakeup_gesture = <3>;
+				cy,easy_wakeup_gesture = <0x0>;
 				/* KEY_HOMEPAGE instead of KEY_HOME(102) */
 				cy,btn_keys = <172 /* KEY_HOME */
 					       139 /* KEY_MENU */
@@ -78,6 +79,17 @@
 
 					cy,vkeys_x = <720>;
 					cy,vkeys_y = <1280>;
+
+					/*8 bits  for gesture control*/
+					cy,easy_wakeup_gesture_keys = <	59 /*Double tap*/
+						60 /*Single finger slide from left to right*/
+						61 /*Single finger slide from right to left*/
+						62 /*Single finger slide from top to bottom*/
+						63 /*Single finger slide from bottom to top*/
+						0  /*Not used*/
+						0  /*Not used*/
+						0  /*Not used*/
+						>;
 
 					cy,virtual_keys = /* KeyCode CenterX CenterY Width Height */
 						/* KEY_BACK */
