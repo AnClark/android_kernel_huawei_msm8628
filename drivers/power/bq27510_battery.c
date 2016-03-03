@@ -38,6 +38,9 @@
 #include <linux/mutex.h>
 #include <linux/power/bq2419x_charger.h>
 #include <linux/power/bq27510_battery.h>
+#ifdef CONFIG_HUAWEI_HW_DEV_DCT
+#include <linux/hw_dev_dec.h>
+#endif
 
 extern void do_power_supply_update(void);
 extern int get_battery_present_status(void);
@@ -1287,6 +1290,7 @@ static int bq27510_update_firmware(struct i2c_client *client, const char *pFileP
     struct firmware_header_entry entry;
     loff_t pos;
     ssize_t vfs_read_retval = 0;
+    /* coverity 102168 */
     char id[ID_LEN] = {0};
     char current_id[ID_LEN];
     int temp;
@@ -1431,6 +1435,7 @@ static ssize_t bq27510_attr_store(struct device_driver *driver,const char *buf, 
 
     memcpy (path_image, buf,  count);
     /* replace '\n' with  '\0'  */
+    /* coverity 101792 */
     if((path_image[count-1]) == '\n')
     {
         path_image[count-1] = '\0';
@@ -1711,6 +1716,7 @@ static ssize_t bq27510_update_gasgauge_version(struct device *dev,
     battery_id_status = get_battery_id();
     force_update_firmware_version_flag = HAND_UPDATE_FIRMWARE_ENABLE;
 
+    /* coverity 101795 */
     memcpy (path_image, buf,  count);
     /* replace '\n' with  '\0'  */
     if((path_image[count-1]) == '\n')
@@ -2284,6 +2290,10 @@ static int bq27510_battery_probe(struct i2c_client *client,
     if (ret != 0)
         pr_err("%s ipps_register_client err=%x\n",
             __func__, ret);
+#endif
+#ifdef CONFIG_HUAWEI_HW_DEV_DCT
+    /* detect current device successful, set the flag as present */
+    set_hw_dev_flag(DEV_I2C_BATTERY);
 #endif
     //start to calculate capacity 5 sencond later,for battery exist only can only dectected by pmic
     schedule_delayed_work(&di->battery_monitor_work,msecs_to_jiffies(START_CAPACITY_CACL));
