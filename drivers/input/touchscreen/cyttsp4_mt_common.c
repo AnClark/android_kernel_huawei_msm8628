@@ -419,11 +419,7 @@ static void cyttsp4_mt_send_dummy_wakeup_event(struct cyttsp4_mt_data *md)
 	}
 
 	if (key_code) {
-		/*report the KEY_POWER*/
-		input_report_key(md->input, KEY_POWER, 1);
-		input_sync(md->input);
-		input_report_key(md->input, KEY_POWER, 0);
-		input_sync(md->input);
+		/*G750-C00 should not report the power key, so delete it*/
 
 		/*report key press and release for the gesture*/
 		input_report_key(md->input, key_code, 1);
